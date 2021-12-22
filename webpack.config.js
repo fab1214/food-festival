@@ -13,25 +13,49 @@ module.exports = {
     filename: "[name].bundle.js",
     path: __dirname + "/dist",
   },
-  module: {
+//   module: {
+//     rules: [
+//       {
+//         test: /\.jpg$/i,
+//         use: [
+//           {
+//             loader: "file-loader",
+//             options: {
+//               esModule: false,
+//               name: "[path][name].[ext]",
+//               publicPath: "assets",
+//             },
+//           },
+//           {
+//             loader: "image-webpack-loader",
+//           },
+//         ],
+//       },
+//     ],
+//   },
+module: {
     rules: [
       {
-        test: /\.jpg$/i,
+        test: /\.jpg$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
               esModule: false,
-              name: "[path][name].[ext]",
-              publicPath: "assets",
-            },
+              name(file) {
+                return '[path][name].[ext]';
+              },
+              publicPath: function(url) {
+                return url.replace('../', '/assets/');
+              }
+            }
           },
           {
-            loader: "image-webpack-loader",
-          },
-        ],
-      },
-    ],
+            loader: 'image-webpack-loader'
+          }
+        ]
+      }
+    ]
   },
 
   plugins: [
