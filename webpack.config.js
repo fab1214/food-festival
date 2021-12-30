@@ -1,6 +1,6 @@
 const webpack = require("webpack");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const path = require('path');
 
 module.exports = {
   entry: {
@@ -9,33 +9,17 @@ module.exports = {
     schedule: "./assets/js/schedule.js",
     tickets: "./assets/js/tickets.js",
   },
+  devServer: {
+    static: "./"
+    },
   output: {
+    path: path.resolve(__dirname, 'dist'),
     filename: "[name].bundle.js",
-    path: __dirname + "/dist",
   },
-//   module: {
-//     rules: [
-//       {
-//         test: /\.jpg$/i,
-//         use: [
-//           {
-//             loader: "file-loader",
-//             options: {
-//               esModule: false,
-//               name: "[path][name].[ext]",
-//               publicPath: "assets",
-//             },
-//           },
-//           {
-//             loader: "image-webpack-loader",
-//           },
-//         ],
-//       },
-//     ],
-//   },
 module: {
     rules: [
       {
+        //regex expression for img extension of .jpg
         test: /\.jpg$/,
         use: [
           {
@@ -64,7 +48,7 @@ module: {
       jQuery: "jquery",
     }),
     new BundleAnalyzerPlugin({
-      analyzerMode: false, // the report outputs to an HTML file in the dist folder
+      analyzerMode: 'static', // the report outputs to an HTML file in the dist folder
     }),
   ],
   mode: "development",
